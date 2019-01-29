@@ -1,21 +1,38 @@
-# Node.js with React
-# Build a Node.js project that uses React.
+# Node.js
+# Build a general Node.js project with npm.
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+name: ant design
 
 trigger:
-- master
+  - master
 
-pool:
-  vmImage: 'Ubuntu-16.04'
+resources:
+  repositories:
+  - repository: self
+    fetchDepth: 1
 
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '8.x'
-  displayName: 'Install Node.js'
-
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
+jobs:
+  - job: test
+    pool:
+      vmImage: 'Ubuntu-16.04'
+    strategy:
+      matrix:
+        - env: TEST_TYPE=lint
+        - env: REACT=16 TEST_TYPE=test:dist
+        - env: REACT=16 TEST_TYPE=test:lib
+        - env: REACT=16 TEST_TYPE=test:es
+        - env: REACT=16 TEST_TYPE=test:dom
+        - env: REACT=16 TEST_TYPE=test:node
+        - env: REACT=15 TEST_TYPE=test:dist
+        - env: REACT=15 TEST_TYPE=test:lib
+        - env: REACT=15 TEST_TYPE=test:es
+        - env: REACT=15 TEST_TYPE=test:dom
+        - env: REACT=15 TEST_TYPE=test:node
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '11.x'
+      - script: npm install
+      - script: scripts/install-react.sh
+      - script: scripts/travis-script.sh
