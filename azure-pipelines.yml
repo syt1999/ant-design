@@ -18,17 +18,28 @@ jobs:
       vmImage: 'Ubuntu-16.04'
     strategy:
       matrix:
-        - env: TEST_TYPE=lint
-        - env: REACT=16 TEST_TYPE=test:dist
-        - env: REACT=16 TEST_TYPE=test:lib
-        - env: REACT=16 TEST_TYPE=test:es
-        - env: REACT=16 TEST_TYPE=test:dom
-        - env: REACT=16 TEST_TYPE=test:node
-        - env: REACT=15 TEST_TYPE=test:dist
-        - env: REACT=15 TEST_TYPE=test:lib
-        - env: REACT=15 TEST_TYPE=test:es
-        - env: REACT=15 TEST_TYPE=test:dom
-        - env: REACT=15 TEST_TYPE=test:node
+        TEST_TYPE:
+          env: TEST_TYPE=lint
+        REACT=16-TEST_TYPE=test:dist:
+          env: REACT=16 TEST_TYPE=test:dist
+        REACT=16-TEST_TYPE=test:lib:
+          env: REACT=16 TEST_TYPE=test:lib
+        REACT=16-TEST_TYPE=test:es:
+          env: REACT=16 TEST_TYPE=test:es
+        REACT=16-TEST_TYPE=test:dom:
+          env: REACT=16 TEST_TYPE=test:dom
+        REACT=16-TEST_TYPE=test:node:
+          env: REACT=16 TEST_TYPE=test:node
+        REACT=15-TEST_TYPE=test:dist:
+          env: REACT=15 TEST_TYPE=test:dist
+        REACT=15-TEST_TYPE=test:lib: 
+          env: REACT=15 TEST_TYPE=test:lib
+        REACT=15-TEST_TYPE=test:es:
+          env: REACT=15 TEST_TYPE=test:es
+        REACT=15-TEST_TYPE=test:dom:
+          env: REACT=15 TEST_TYPE=test:dom
+        REACT=15-TEST_TYPE=test:node:
+          env: REACT=15 TEST_TYPE=test:node
     steps:
       - task: NodeTool@0
         inputs:
